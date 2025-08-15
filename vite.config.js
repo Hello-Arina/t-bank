@@ -1,13 +1,15 @@
+// vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { viteSingleFile } from 'vite-plugin-singlefile'
 
-export default defineConfig({
-  base: './',
-  build: {
+export default defineConfig(({ mode }) => {
+  const isPages = mode === 'pages'  
+  return {
+    plugins: [react()],
     
-    assetsInlineLimit: 100_000_000,
-    cssCodeSplit: false, 
-  },
-  plugins: [react(), viteSingleFile()],
+    base: isPages ? '/t-bank/' : './',
+    build: {
+      outDir: isPages ? 'docs' : 'dist'
+    }
+  }
 })
